@@ -1,4 +1,4 @@
 [Project]
 Name=CorridorSnatch
-Manager=KDevCMakeManager
+Manager=KDevCustomMakeManager
 VersionControl=kdevgit

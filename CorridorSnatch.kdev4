@@ -1,0 +1,4 @@
+[Project]
+Name=CorridorSnatch
+Manager=KDevCMakeManager
+VersionControl=kdevgit

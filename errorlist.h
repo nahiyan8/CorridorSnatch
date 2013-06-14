@@ -3,7 +3,7 @@
 
 // This file contains a list of error numbers
 
-#define ERRORTYPE_SDLINIT_VIDEO 1
-#define ERRORTYPE_SDLINIT_AUDIO 2
+#define ERROR_SDLINIT_VIDEO 1
+#define ERROR_SDLINIT_AUDIO 2
 
 #endif

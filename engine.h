@@ -1,6 +1,10 @@
 #ifndef engine_h_defined
 #define engine_h_defined
 
+#include <stdio.h>
+#include <SDL/SDL.h>
+#include "errorlist.h"
+
 typedef struct
 {
 	bool sdl_video_initialised, sdl_audio_initialised;

@@ -1,38 +1,25 @@
-#ifndef init_c_defined
-#define init_c_defined
+#include "engine.h"
 
-#include <stdio.h>
-#include <SDL/SDL.h>
-#include "errorlist.h"
-
-int initialise(ENGINE_STATE& engine_state)
+engine_t engine_initialise()
 {
+	engine_t engine_state = {false, false, false, false};
+	
 	if ( SDL_Init(SDL_INIT_VIDEO) == -1 )
-	{
-		printf("(%s:%d:fatal): failed to initialise SDL_INIT_VIDEO\n", __FILE__, __LINE__);
-		return ERROR_SDLINIT_VIDEO;
-	}
+		printf("%s:%d: fatal: failed to initialise SDL_INIT_VIDEO\n", __FILE__, __LINE__);
 	else
 		engine_state.sdl_video_initialised = true;
 	
+	// Audio is non-essential!
 	if ( SDL_InitSubSystem(SDL_INIT_AUDIO) == -1 )
-	{
-		printf("(%s:%d:warning): failed to initialise SDL_INIT_AUDIO\n", __FILE__, __LINE__);
-		return ERROR_SDLINIT_AUDIO;
-	}
+		printf("%s:%d: warning: failed to initialise SDL_INIT_AUDIO\n", __FILE__, __LINE__);
 	else
 		engine_state.sdl_audio_initialised = true;
 	
-	
-	
-	return 0;
+	return engine_state;
 }
 
-void quit(ENGINE_STATE& engine_state)
+void engine_quit(engine_t engine_state)
 {
 	if (engine_state.sdl_video_initialised || engine_state.sdl_audio_initialised)
 		SDL_Quit();
 }
-
-
-#endif

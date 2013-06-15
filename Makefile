@@ -1,9 +1,12 @@
 CC=gcc
-CFLAGS="-Wall"
+CLIBS=-lSDLmain -lSDL
+CFLAGS=-std=c11 -Wextra -pedantic -pedantic-errors -Wall $(CLIBS)
+CDEBUGFLAGS=-pg
+CSTABLEFLAGS=-O3
 
-debug:clean
-	$(CC) $(CFLAGS) -o corridorsnatch.bin main.c
-stable:clean
-	$(CC) $(CFLAGS) -o corridorsnatch.bin main.c
+debug: clean
+	$(CC) $(CFLAGS) $(CDEBUGFLAGS) -o corridorsnatch.bin main.c
+stable: clean
+	$(CC) $(CFLAGS) $(CSTABLEFLAGS) -o corridorsnatch.bin main.c
 clean:
-	rm -vfr *~ corridorsnatch
+	rm -vfr *~ corridorsnatch.bin

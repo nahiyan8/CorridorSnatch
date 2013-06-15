@@ -1,22 +1,20 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct
-{
-	bool sdl_video_initialised, sdl_audio_initialised;
-	bool textures_loaded, sound_loaded;
-} ENGINE_STATE; /* I'm so sorry :( */
-
-#include "engine.c"
+#include "engine.h"
 
 int main(int argc, char **argv) 
 {	
-	ENGINE_STATE engine_state = {false, false, false, false};
+	// Declarations
+	engine_t engine_state;
 	
-	if (initialise(&engine_state) != 0)
-		quit(&engine_state);
+	// Initialisation
+	engine_state = engine_initialise();
 	
+	// Main
+	SDL_Delay(10000);
 	
-	quit(&engine_state);
-    return 0;
+	// Exit
+	engine_quit(engine_state);
+	return 0;
 }

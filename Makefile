@@ -6,9 +6,11 @@ SRC=$(wildcard src/*.c)
 OBJ=$(patsubst src/%.c,obj/%.o,$(wildcard src/*.c))
 
 all: $(OBJ)
+	mkdir -p bin/
 	$(CC) $(LDFLAGS) $^ -o bin/corridorsnatch.bin
 
 obj/%.o: src/%.c
+	mkdir -p obj/
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 test:

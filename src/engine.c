@@ -37,7 +37,7 @@ engine_t engine_initialise(void)
 
 		// If it's -1, it means any resolution can be used
 		if ( screen_modes == (SDL_Rect**) -1 )
-			engine.screen = SDL_SetVideoMode(854, 480, 32, SDL_SWSURFACE);
+			engine.screen = SDL_SetVideoMode(1024, 600, 32, SDL_SWSURFACE);
 		else
 			engine.screen = SDL_SetVideoMode(screen_modes[0]->w, screen_modes[0]->h, 32, SDL_SWSURFACE);
 

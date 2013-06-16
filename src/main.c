@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	engine = engine_initialise();
 	
 	// Main
-	
+	SDL_Delay(10000);
 	
 	// Exit
 	engine_quit(engine);

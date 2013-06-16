@@ -1,12 +1,18 @@
 CC=gcc
-CLIBS=-lSDLmain -lSDL
-CFLAGS=-std=c11 -Wextra -pedantic -pedantic-errors -Wall $(CLIBS)
-CDEBUGFLAGS=-pg
-CSTABLEFLAGS=-O3
+CFLAGS=-m64 -std=c11 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -pg
+LDFLAGS=-lSDLmain -lSDL
 
-debug: clean
-	$(CC) $(CFLAGS) $(CDEBUGFLAGS) -o bin/corridorsnatch.bin src/main.c
-stable: clean
-	$(CC) $(CFLAGS) $(CSTABLEFLAGS) -o bin/corridorsnatch.bin src/main.c
+SRC=$(wildcard src/*.c)
+OBJ=$(patsubst src/%.c,obj/%.o,$(wildcard src/*.c))
+
+all: $(OBJ)
+	$(CC) $(LDFLAGS) $^ -o bin/corridorsnatch.bin
+
+obj/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+test:
+	echo -e "\nCC=$(CC)\nLDFLAGS=$(LDFLAGS)\nCFLAGS=$(CFLAGS)\nSRC=$(SRC)\nOBJ=$(OBJ)\n"
+
 clean:
-	rm -vfr *~ corridorsnatch.bin
+	rm -vfr bin/* obj/*

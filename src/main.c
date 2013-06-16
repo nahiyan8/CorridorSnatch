@@ -6,15 +6,15 @@
 int main(int argc, char **argv) 
 {	
 	// Declarations
-	engine_t engine_state;
+	engine_t engine;
 	
 	// Initialisation
-	engine_state = engine_initialise();
+	engine = engine_initialise();
 	
 	// Main
-	SDL_Delay(10000);
+	
 	
 	// Exit
-	engine_quit(engine_state);
+	engine_quit(engine);
 	return 0;
 }

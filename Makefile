@@ -5,8 +5,8 @@ CDEBUGFLAGS=-pg
 CSTABLEFLAGS=-O3
 
 debug: clean
-	$(CC) $(CFLAGS) $(CDEBUGFLAGS) -o corridorsnatch.bin main.c
+	$(CC) $(CFLAGS) $(CDEBUGFLAGS) -o bin/corridorsnatch.bin src/main.c
 stable: clean
-	$(CC) $(CFLAGS) $(CSTABLEFLAGS) -o corridorsnatch.bin main.c
+	$(CC) $(CFLAGS) $(CSTABLEFLAGS) -o bin/corridorsnatch.bin src/main.c
 clean:
 	rm -vfr *~ corridorsnatch.bin

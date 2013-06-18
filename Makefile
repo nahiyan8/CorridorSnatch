@@ -1,17 +1,17 @@
-CC=gcc
-CFLAGS=-m64 -std=c11 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -pg
+CC=g++
+CPPFLAGS=-m64 -std=c++11 -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wno-switch -pg
 LDFLAGS=-lSDLmain -lSDL
 
-SRC=$(wildcard src/*.c)
-OBJ=$(patsubst src/%.c,obj/%.o,$(wildcard src/*.c))
+SRC=$(wildcard src/*.cpp)
+OBJ=$(patsubst src/%.cpp,obj/%.o,$(wildcard src/*.cpp))
 
 all: $(OBJ)
 	mkdir -p bin/
-	$(CC) $(LDFLAGS) $^ -o bin/corridorsnatch.bin
+	$(CC) $(LDFLAGS) $(OBJ) -o bin/corridorsnatch.bin
 
-obj/%.o: src/%.c
+obj/%.o: src/%.cpp
 	mkdir -p obj/
-	$(CC) $(CFLAGS) -c $^ -o $@
+	$(CC) $(CPPFLAGS) -c $< -o $@
 
 test:
 	echo -e "\nCC=$(CC)\nLDFLAGS=$(LDFLAGS)\nCFLAGS=$(CFLAGS)\nSRC=$(SRC)\nOBJ=$(OBJ)\n"

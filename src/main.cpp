@@ -1,20 +1,17 @@
-#include <stdio.h>
-#include <stdbool.h>
+#include <iostream>
 
-#include "engine.h"
+#include "engine.hpp"
 
 int main(int argc, char **argv) 
 {	
 	// Declarations
-	engine_t engine;
+	GameEngine engine;
 	
 	// Initialisation
-	engine = engine_initialise();
 	
 	// Main
-	SDL_Delay(10000);
+	engine.main();
 	
 	// Exit
-	engine_quit(engine);
 	return 0;
 }

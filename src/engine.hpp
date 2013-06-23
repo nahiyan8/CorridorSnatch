@@ -5,10 +5,10 @@
 #include <SDL/SDL.h>
 
 typedef struct
-	{ int16_t x, y; } coord_t;
+	{ int32_t x, y; } coord_t;
 	
 typedef struct
-	{ uint16_t w, h; } bounds_t;
+	{ uint32_t w, h; } bounds_t;
 
  /*
  * Let me explain some of the data of the typical world, it has a unique ID, and a size. One will be randomly generated and
@@ -30,9 +30,9 @@ typedef struct
 typedef struct
 {
 	uint16_t type, map_id, animation_state, mass;
-	float vel_x, vel_y, target_vel_x, target_vel_y;
+	float vel_x, vel_y, accel_x, accel_y;
 	coord_t coord, crosshair;
-	uint8_t opacity; bool collide;
+	uint8_t opacity; bool collide, friction;
 } entity_t;
 
 class GameEngine
@@ -57,7 +57,7 @@ class GameEngine
 		bool textures_loaded, sounds_loaded;
 		
 		SDL_Surface *screen, *buffer; coord_t camera;
-		uint32_t last_tick;
+		uint32_t last_tick, delta_time;
 		
 		SDL_Surface **texture_materials, **texture_entities; bounds_t texture_material_size, *texture_entity_size;
 		map_t *maps; uint16_t map_count;
@@ -71,7 +71,7 @@ class GameEngine
 		
 		void main();
 		
-		void render_map(map_t *current_map, SDL_Surface **current_textures, bounds_t current_texture_size);
+		void render_map(map_t *current_map, SDL_Surface **current_textures, const bounds_t current_texture_size);
 		void render_entities(map_t *current_map, SDL_Surface** current_textures, bounds_t *current_texture_size);
 		
 		void physics_update();

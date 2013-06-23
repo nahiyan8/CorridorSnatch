@@ -53,6 +53,11 @@ GameEngine::GameEngine()
 		}
 	}
 
+	// Load textures from file names in the form of *.png, and load them up alphabetically into the array.
+	// End loading textures
+	
+	// Load up sounds!
+	
 	running = true;
 }
 
@@ -65,6 +70,8 @@ GameEngine::~GameEngine()
 void GameEngine::main()
 {
 	SDL_Event event;
+	map_t *current_map;
+	SDL_Rect camera_blit_coord;
 	
 	// Main loop
 	while (running)
@@ -75,10 +82,10 @@ void GameEngine::main()
 			{
 				case SDL_KEYDOWN:
 				{
-					if (event.key.keysym.sym == control_bindings[CONTROL_MOVELEFT])		entities[0].target_vel_x = -1;	break;
-					if (event.key.keysym.sym == control_bindings[CONTROL_MOVERIGHT])	entities[0].target_vel_x = 1;	break;
-					if (event.key.keysym.sym == control_bindings[CONTROL_MOVEUP])		entities[0].target_vel_y = -1;	break;
-					if (event.key.keysym.sym == control_bindings[CONTROL_MOVEDOWN])		entities[0].target_vel_y = 1;	break;
+					if (event.key.keysym.sym == control_bindings[CONTROL_MOVELEFT])		entities[0].accel_x = -1;	break;
+					if (event.key.keysym.sym == control_bindings[CONTROL_MOVERIGHT])	entities[0].accel_x = 1;	break;
+					if (event.key.keysym.sym == control_bindings[CONTROL_MOVEUP])		entities[0].accel_y = -1;	break;
+					if (event.key.keysym.sym == control_bindings[CONTROL_MOVEDOWN])		entities[0].accel_y = 1;	break;
 				}
 				
 				case SDL_MOUSEMOTION:
@@ -88,18 +95,24 @@ void GameEngine::main()
 					break;
 				}
 			}
+			
+//		physics_update();
+		
+		current_map = maps + entities[0].map_id;
+		render_map(current_map, texture_materials, texture_material_size);
+		render_entities(current_map, texture_entities, texture_entity_size);
+		
+		camera_blit_coord.x = camera.x; camera_blit_coord.y = camera.y;
+		camera_blit_coord.w = screen->w; camera_blit_coord.h = screen->h;
+		
+		SDL_BlitSurface(buffer, &camera_blit_coord, screen, NULL);
+		SDL_UpdateRect(screen, 0, 0, screen->w, screen->h);
 	}
-	
-	physics_update();
-	
-	map_t *current_map = maps + entities[0].map_id;
-	render_map(current_map, texture_materials, texture_material_size);
-	render_entities(current_map, texture_entities, texture_entity_size);
 }
 
 void GameEngine::render_map(map_t *current_map, SDL_Surface **current_textures, bounds_t current_texture_size)
 {
-	uint32_t slot_x = 0, slot_y = 0; SDL_Rect blit_coord = {0, 0, current_texture_size.w, current_texture_size.h};
+	uint32_t slot_x = 0, slot_y = 0; SDL_Rect blit_coord = {0, 0, (Uint16) current_texture_size.w, (Uint16) current_texture_size.h};
 
 	for ( ; slot_x < current_map->size.w; slot_x++, blit_coord.x += current_texture_size.w )
 		for ( ; slot_y < current_map->size.h; slot_y++, blit_coord.y += current_texture_size.h )
@@ -155,7 +168,7 @@ void GameEngine::render_entities(map_t *current_map, SDL_Surface** current_textu
 		SDL_BlitSurface( texture_entities[entities[slot].type], &blit_src_coord, buffer, &blit_dest_coord );
 	}
 }
-
+/*
 void GameEngine::physics_update()
 {
 	// Update entity speeds/positions!
@@ -164,4 +177,4 @@ void GameEngine::physics_update()
 		entities[slot].vel_x = (entities[slot].vel_x + entities[slot].target_vel_x) / 2.0f;
 		entities[slot].vel_y = (entities[slot].vel_y + entities[slot].target_vel_y) / 2.0f;
 	}	
-}
+}*/
